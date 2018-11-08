@@ -1,7 +1,35 @@
 tickets_api.routing:
   path: '/my_tickets'
   defaults:
-    _title: 'My Tickets'
+    _title: 'All My Tickets'
     _controller: '\Drupal\tickets_api\Controller\TicketsAPIController::my_tickets'
   requirements:
     _permission: 'access content'
+
+tickets_api.get:
+  path: '/tickets_api/get.json'
+  defaults: { _controller: '\Drupal\tickets_api\Controller\TicketsAPIController::get_example' }
+  methods:  [GET]
+  requirements:
+    _access: 'TRUE'
+
+tickets_api.put:
+  path: '/tickets_api/put.json'
+  defaults: { _controller: '\Drupal\tickets_api\Controller\TicketsAPIController::put_example' }
+  methods:  [PUT]
+  requirements:
+    _access: 'TRUE'
+
+tickets_api.post:
+  path: '/tickets_api/post.json'
+  defaults: { _controller: '\Drupal\tickets_api\Controller\TicketsAPIController::post_example' }
+  methods:  [POST]
+  requirements:
+    _access: 'TRUE'
+
+tickets_api.delete:
+  path: '/tickets_api/delete.json'
+  defaults: { _controller: '\Drupal\tickets_api\Controller\TicketsAPIController::delete_example' }
+  methods:  [DELETE]
+  requirements:
+    _access: 'TRUE'
