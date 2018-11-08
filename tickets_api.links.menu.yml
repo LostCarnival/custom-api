@@ -1,0 +1,6 @@
+tickets_api.link:
+  title: 'My Tickets'
+  description: 'My Tickets link'
+  menu_name: main
+  route_name: tickets_api.routing
+  weight: 100
