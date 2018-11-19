@@ -11,14 +11,14 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class TicketsAPIController extends ControllerBase {
 
 	public function my_tickets() {
-		$output = 'My tickets will be here';
+		$output = '';
 		return array(
 			'#markup' => render( $output ),
 		);
 	}
 
 	public function get_example( Request $request ) {
-		$response['data'] = 'Return JSON data';
+		$response['data'] = 'Return JSON GET data!';
 		$response['method'] = 'GET';
 		return new JsonResponse( $response );
 	}
@@ -34,7 +34,7 @@ class TicketsAPIController extends ControllerBase {
 			$data = json_decode( $request->getContent(), TRUE );
 			$request->request->replace( is_array( $data ) ? $data : [] );
 		}
-		$response['data'] = 'Return POST data';
+		$response['data'] = 'Return POST JSON data';
 		$response['method'] = 'POST';
 		return new JsonResponse( $response );
 	}

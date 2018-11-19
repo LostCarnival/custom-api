@@ -1,7 +1,7 @@
 tickets_api.routing:
   path: '/my_tickets'
   defaults:
-    _title: 'All My Tickets'
+    _title: 'Все мои заявки'
     _controller: '\Drupal\tickets_api\Controller\TicketsAPIController::my_tickets'
   requirements:
     _permission: 'access content'

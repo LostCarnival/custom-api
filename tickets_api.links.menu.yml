@@ -1,5 +1,5 @@
 tickets_api.link:
-  title: 'My Tickets plugin custom link'
+  title: 'Мои заявки'
   description: 'My Tickets link'
   menu_name: main
   route_name: tickets_api.routing

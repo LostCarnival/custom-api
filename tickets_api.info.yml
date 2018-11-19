@@ -2,3 +2,6 @@ name: 'Tickets API'
 description: 'Tickets plugin with RESTful API'
 core: 8.x
 type: module
+
+dependencies:
+ - rest
