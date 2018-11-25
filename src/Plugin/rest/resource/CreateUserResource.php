@@ -12,17 +12,17 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 
 /**
- * Provides a resource to create new ticket.
+ * Provides a resource to create new user (only for admin account)
  *
  * @RestResource(
- *   id = "create_ticket_resource",
- *   label = @Translation("Create ticket resource"),
+ *   id = "create_user_resource",
+ *   label = @Translation("Create user resource"),
  *   uri_paths = {
- *     "create" = "/tickets_api/create-ticket",
+ *     "create" = "/tickets_api/create-user",
  *   }
  * )
  */
-class CreateTicketResource extends ResourceBase {
+class CreateUserResource extends ResourceBase {
 
   /**
    * A current user instance.
@@ -32,7 +32,7 @@ class CreateTicketResource extends ResourceBase {
   protected $currentUser;
 
   /**
-   * Constructs a new CreateTicketResource object.
+   * Constructs a new CreateUserResource object.
    *
    * @param array $configuration
    *   A configuration array containing information about the plugin instance.
@@ -77,35 +77,22 @@ class CreateTicketResource extends ResourceBase {
    */
   public function post($entity_data) {
 
-    if (!$this->currentUser->hasPermission('create ticket content')) {
+    /* if (!$this->currentUser->hasPermission('administer users')) {
       throw new AccessDeniedHttpException();
-    }
+    } */
 
     try {
-      $entity_data['type'] = 'ticket';
 
+      // $entity_data['roles'] = array(); ..........
 
+      $account = entity_create('user', $entity_data);
+      $account->addRole('customer');
+      $account->save();
 
-      // Get custom_api user id ............. prototype
-      $get_user = \Drupal::entityTypeManager()
-        ->getStorage('user')
-        ->loadByProperties(['name' => $entity_data['uid']]);
-      $get_user_now = reset($get_user);
-      if ($get_user_now) {
-        $entity_data['uid'] = $get_user_now->id();
-      } else {
-        $entity_data['uid'] = 1;
-      }
+      return new ResourceResponse($account);
 
-
-
-      $ticket = \Drupal::entityTypeManager()
-        ->getStorage('node')
-        ->create($entity_data);
-      $ticket->save();
-      return new ResourceResponse($ticket);
     } catch (\Exception $e) {
-      return new ResourceResponse('Что-то пошло не так в момент создания заявки. Проверьте формат передачи данных!', 400);
+      return new ResourceResponse('Что-то пошло не так в момент создания пользователя. Проверьте формат передачи данных!', 400);
     }
 
   }
